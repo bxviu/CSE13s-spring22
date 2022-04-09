@@ -49,6 +49,9 @@ int main(void) {
                           bigger_minus_smaller(10, -10));
   should_be_exactly_equal("bigger_minus_smaller(-10, -10)", 0,
                           bigger_minus_smaller(-10, -10));
+  should_be_exactly_equal("bigger_minus_smaller(-10, 10)", 20,
+                          bigger_minus_smaller(-10, 10));
+  
 
   printf("\n**********************\n");
   printf("tests for value_in_range\n");
@@ -60,6 +63,9 @@ int main(void) {
 
   should_be_exactly_equal("value_in_range(0, 10, 5)", false,
                           value_in_range(0, 10, 5));
+
+  should_be_exactly_equal("value_in_range(0, 5, 5)", true,
+                          value_in_range(0, 5, 5));
 
   return 0;
 }
