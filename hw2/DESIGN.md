@@ -17,6 +17,6 @@ I will initialize a variable called max with the first element in the array, to 
 
 I will initialize a variable called sum with 0. Then I will use a for loop to iterate through the array, and stopping once it reaches the input length. In the loop, it will check if the current array element is greater than 0, and if so, it will add the value to the sum. After the loop ends, it will return the sum.
 
-## count_negative
+### count_negative
 
 I will initialize a variable called count with 0. Like sum_positive, I will use a for loop to iterate through the array, and stopping once it reaches the input size. In the loop, it will check if the current array element is less than 0, and if so, it will increment count by 1. After the loop ends, it will return the count.
