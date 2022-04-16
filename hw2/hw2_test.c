@@ -14,6 +14,8 @@ void should_be_exactly_equal(const char *message, int expected, int actual) {
 int main(void) {
   int test_array_1[] = {100, 5, 3, -12, 109, -100};
   int test_array_2[] = {-55, 3, -12, 109, -100, 12, -12, 7000, 12};
+  //int t_a_3[0]; 
+  int t_a_4[] = {-5};
 
   printf("**********************\n");
   printf("tests for next_collatz_number\n");
@@ -45,6 +47,7 @@ int main(void) {
   should_be_exactly_equal("maximum of test_array_2",
       7000,
       maximum(test_array_2, 9));
+  should_be_exactly_equal("maximum of t_a_4",-5,maximum(t_a_4,1));
 
   printf("\n**********************\n");
   printf("tests for sum_positive\n");
@@ -53,7 +56,9 @@ int main(void) {
       sum_positive(test_array_1, 6));
   should_be_exactly_equal("sum_positive of test_array_2",
       7136,
-      sum_positive(test_array_2, 9));
+      sum_positive(test_array_2, 9)); 
+  //should_be_exactly_equal("sum_positive of t_a_3",0,sum_positive(t_a_3,0));
+  should_be_exactly_equal("sum_positive of t_a_4",0,sum_positive(t_a_4,1));
 
   printf("\n**********************\n");
   printf("tests for count_negative\n");
@@ -63,6 +68,11 @@ int main(void) {
   should_be_exactly_equal("count_negative of test_array_2",
       4,
       count_negative(test_array_2, 9));
-
+  /*should_be_exactly_equal("count_negative of t_a_3",
+      0,
+      count_negative(t_a_3, 0));*/
+  should_be_exactly_equal("count_negative of t_a_4",
+      1,
+      count_negative(t_a_4, 1));
   return 0;
 }
