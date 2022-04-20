@@ -9,22 +9,7 @@
 #include <limits.h>
 
 bool str_suffix(char *haystack, char *needle) {
-  if (*needle == '\0'){
-    return true;
-  }
-  for (int i = 0; haystack[i] != '\0'; i++){
-    if (haystack[i] == needle[0]){
-      for (int j = 0; needle[j] != '\0'; j++){
-        if (haystack[i+j] != needle[j]){
-	  break;
-	}
-	else if (haystack[i+j+1] == '\0' && needle[j+1] == '\0'){
-	  return true;
-	}
-      }
-    }
-  }
-  return false;
+  return !((bool)(strcmp(haystack+(strlen(haystack)-strlen(needle)), needle)));
 }
 
 float dot_product(float *vec_a, float *vec_b, int length) {
