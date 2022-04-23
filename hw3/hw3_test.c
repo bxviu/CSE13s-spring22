@@ -39,7 +39,8 @@ void test_str_suffix(char *haystack, char *needle, bool expected) {
 int main(void) {
   int test_array_1[] = {100, 5, 3, -12, 109, -100};
   int test_array_2[] = {-55, 3, -12, 109, -100, 12, -12, 7000, 12};
-
+  int test_array_3[] = {4};
+  
   printf("**********************\n");
   printf("tests for str_suffix\n");
   test_str_suffix("", "", true);
@@ -76,6 +77,9 @@ int main(void) {
   should_be_exactly_equal("reduce with count_negative on test_array_2",
       4,
       reduce(test_array_2, 9, count_negative_helper, 0));
+  should_be_exactly_equal("reduce with count_negative on test_array_3",
+      0,
+      reduce(test_array_3, 1, count_negative_helper, 0));
 
   printf("\n**********************\n");
   printf("tests for maximum_with_reduce\n");
@@ -85,6 +89,9 @@ int main(void) {
   should_be_exactly_equal("maximum of test_array_2",
       7000,
       maximum_with_reduce(test_array_2, 9));
+  should_be_exactly_equal("maximum of test_array_3",
+      4,
+      maximum_with_reduce(test_array_3, 1));
 
   printf("\n**********************\n");
   printf("tests for sum_positive_with_reduce\n");
@@ -94,6 +101,9 @@ int main(void) {
   should_be_exactly_equal("sum_positive of test_array_2",
       7136,
       sum_positive_with_reduce(test_array_2, 9));
+  should_be_exactly_equal("sum_positive of test_array_3",
+      4,
+      sum_positive_with_reduce(test_array_3, 1));
 
   return 0;
 }
