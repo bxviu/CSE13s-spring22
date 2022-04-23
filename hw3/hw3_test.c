@@ -47,6 +47,9 @@ int main(void) {
   test_str_suffix("long string here", "here", true);
   test_str_suffix("", "something other than nothing", false);
   test_str_suffix("unrelated strings", "completely different", false);
+  // new ones
+  test_str_suffix("long string here", "string", false);
+  test_str_suffix("long string here", "long string", false);
 
 
   printf("\n**********************\n");

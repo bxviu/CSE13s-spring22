@@ -28,7 +28,6 @@ int reduce(int *nums, int length, int (*f)(int,int), int initial) {
   return result;
 }
 
-
 // These two functions will end up as a *single call to reduce*, but you'll have
 // to write a new helper function for each of them. Those helper functions will
 // be quite short though!
