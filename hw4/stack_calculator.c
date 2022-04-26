@@ -19,7 +19,8 @@ bool stack_push(Stack *s, CalculatorItem item) {
   Node *newNode;
   newNode = (Node*)malloc(sizeof(Node));
   if (newNode == NULL) return false;
-  newNode->next = s->top;
+  if (stack_empty(s)){ newNode->next = NULL; } 
+  else { newNode->next = s->top; }
   newNode->item = item;
   s->top = newNode;
   return true;
@@ -29,10 +30,10 @@ bool stack_push(Stack *s, CalculatorItem item) {
 // return false if the stack is NULL or if it is empty.
 bool stack_pop(Stack *s, CalculatorItem *output) {
   // your code here
-  if (s->top == NULL) return false;
+  if (stack_empty(s)) return false;
   *output = s->top->item;
   Node* deleteThis = s->top;
-  s->top = deleteThis->next;
+  s->top = s->top->next;
   free(deleteThis);
   return true;
 }
@@ -47,11 +48,10 @@ bool stack_empty(Stack *s) {
 // When you are done, set the pointer to NULL.
 void stack_delete(Stack **s) {
   // your code here
-  CalculatorItem* temp = NULL;
-  while ((*s)->top != NULL){
-  //while (stack_pop(*s, temp)){}
-  stack_pop(*s, temp);}
-//	  free(temp);
+  CalculatorItem temp;
+  //while (!stack_empty((*s))){
+  while (stack_pop(*s, &temp));
+  //stack_pop(*s, &temp);}
   free(*s);
   *s = NULL;
 }

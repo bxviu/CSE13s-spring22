@@ -69,7 +69,10 @@ int main(void) {
   stack_push(stack2, five);
   result = stack_empty(stack2);
   should_be_exactly_equal("expect false", false, result);
-
+  //stack_pop(stack2, &output);
+  //stack_push(stack2, six);
+  stack_delete(&stack2);
+  
   printf("\n**********************\n");
   printf("tests for stack_delete\n");
   // note that we'll also make sure that no memory is leaked, in autograding
@@ -117,6 +120,7 @@ int main(void) {
   should_be_exactly_equal("stack3 should now be empty", true, result);
   
   //stack_delete(&stack2);
-  //stack_delete(&stack3);
+  stack_delete(&stack3);
+  
   return 0;
 }
