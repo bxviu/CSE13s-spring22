@@ -16,9 +16,8 @@ Stack *stack_create(void) {
 // so (eg, if memory allocation fails).
 bool stack_push(Stack *s, CalculatorItem item) {
   // your code here
-  Node *newNode;
-  newNode = (Node*)malloc(sizeof(Node));
-  if (newNode == NULL) return false;
+  Node *newNode = (Node*)malloc(sizeof(Node));
+  if (newNode == NULL){ return false; }
   if (stack_empty(s)){ newNode->next = NULL; } 
   else { newNode->next = s->top; }
   newNode->item = item;
@@ -30,7 +29,7 @@ bool stack_push(Stack *s, CalculatorItem item) {
 // return false if the stack is NULL or if it is empty.
 bool stack_pop(Stack *s, CalculatorItem *output) {
   // your code here
-  if (stack_empty(s)) return false;
+  if (stack_empty(s)){ return false; }
   *output = s->top->item;
   Node* deleteThis = s->top;
   s->top = s->top->next;
@@ -49,9 +48,7 @@ bool stack_empty(Stack *s) {
 void stack_delete(Stack **s) {
   // your code here
   CalculatorItem temp;
-  //while (!stack_empty((*s))){
   while (stack_pop(*s, &temp));
-  //stack_pop(*s, &temp);}
   free(*s);
   *s = NULL;
 }
@@ -60,12 +57,15 @@ void stack_delete(Stack **s) {
 // and false if there was an error of some kind.
 bool stack_compute_step(Stack *s, CalculatorItem item) {
   // your code here
-  if (item.type == NUMBER){ stack_push(s, item); }
+  if (item.type == NUMBER){ 
+    stack_push(s, item);
+    return true; 
+  }
   else {
       CalculatorItem a;
       CalculatorItem b;
       if (!stack_pop(s, &a)){ return false; }
-      if (!stack_pop(s, &b)){ return false; }
+      if (!stack_pop(s, &b)){ /*stack_push(s, a);*/ return false; }
       CalculatorItem result;
       if (item.type == ADD){
         result.value = a.value + b.value;
@@ -77,11 +77,12 @@ bool stack_compute_step(Stack *s, CalculatorItem item) {
         result.value = a.value * b.value;
       }
       else {
-	if (!a.value){ return false; }
+	if (!a.value){ /*stack_push(s,a); stack_push(s, b);*/ return false; }
         result.value = b.value / a.value;
       }
     result.type = NUMBER;
     stack_push(s, result);
+    return true;
   }
-  return true;
+  return false;
 }

@@ -69,8 +69,6 @@ int main(void) {
   stack_push(stack2, five);
   result = stack_empty(stack2);
   should_be_exactly_equal("expect false", false, result);
-  //stack_pop(stack2, &output);
-  //stack_push(stack2, six);
   stack_delete(&stack2);
   
   printf("\n**********************\n");
@@ -119,8 +117,48 @@ int main(void) {
   result = stack_empty(stack3);
   should_be_exactly_equal("stack3 should now be empty", true, result);
   
-  //stack_delete(&stack2);
   stack_delete(&stack3);
   
+  printf("\n**********************\n");
+  printf("test for stack_delete on non-empty stack\n");
+  Stack *stack4 = stack_create();
+  stack_push(stack4, five);
+  stack_push(stack4, four);
+  stack_push(stack4, two);
+  stack_delete(&stack4);
+  ptr_should_be_equal("stack4 should be set to NULL\n", NULL, stack4);
+  
+  printf("\n**********************\n");
+  printf("test for stack_delete and pop on an empty stack\n");
+  Stack *stack5 = stack_create();
+  result = stack_pop(stack5, &output);
+  stack_delete(&stack5);
+  ptr_should_be_equal("stack5 should be set to NULL\n", NULL, stack4);
+  printf("result after popping an empty stack: %d\n",result);
+
+  printf("\n**********************\n");
+  printf("test for stack_compute_step on a stack with not enough numbers\n");
+  Stack *stack6 = stack_create();
+  stack_push(stack6, five);
+  result = stack_compute_step(stack6, subtract);
+  printf("return compute on one number: %d\n", result);
+  stack_pop(stack6, &output);
+  result = stack_compute_step(stack6, plus);
+  printf("return compute on empty stack: %d\n", result);
+  stack_delete(&stack6);
+  
+  printf("\n**********************\n");
+  printf("test for stack_compute_step on division by 0\n");
+  Stack *stack7 = stack_create();
+  CalculatorItem zero = {NUMBER, 0.0};
+  stack_push(stack7,four);
+  stack_push(stack7, five);
+  result = stack_compute_step(stack7,divide);
+  printf("return of division not by 0: %d\n", result);
+  stack_compute_step(stack7, zero);
+  result = stack_compute_step(stack7,divide);
+  printf("return of division by 0: %d\n", result);
+  stack_delete(&stack7);
+
   return 0;
 }
