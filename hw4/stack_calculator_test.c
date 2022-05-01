@@ -160,5 +160,33 @@ int main(void) {
   printf("return of division by 0: %d\n", result);
   stack_delete(&stack7);
 
+  printf("\n**********************\n");
+  printf("test for stack being unchanged after error in compute_step\n");
+  Stack *stack8 = stack_create();
+  stack_push(stack8,four);
+  stack_compute_step(stack8, zero);
+  result = stack_compute_step(stack8,divide);
+  printf("return of division by 0: %d\n", result);
+  should_be_equal("last stack element should be 4", stack8->top->next->item.value,4.0);
+  should_be_equal("top stack element should be 0", stack8->top->item.value,0.0);
+  stack_push(stack8,five);
+  stack_push(stack8,zero);
+  stack_compute_step(stack8,divide);
+  should_be_equal("4th stack element should be 4", stack8->top->next->next->next->item.value,4.0);
+  should_be_equal("3rd stack element should be 0", stack8->top->next->next->item.value,0.0);
+  should_be_equal("2nd stack element should be 5", stack8->top->next->item.value,5.0);
+  should_be_equal("1st stack element should be 0", stack8->top->item.value,0.0);
+  stack_compute_step(stack8,plus);
+  should_be_equal("1st stack element should be 5", stack8->top->item.value,5.0);
+  stack_compute_step(stack8,divide);
+  should_be_equal("1st stack element should be 0", stack8->top->item.value,0.0);
+  result = stack_compute_step(stack8,subtract);
+  should_be_equal("1st stack element should be 4", stack8->top->item.value,4.0);
+  should_be_exactly_equal("expect true for normal computation", true, result);
+  result = stack_compute_step(stack8,plus);
+  should_be_equal("1st stack element should be 4", stack8->top->item.value,4.0);
+  should_be_exactly_equal("expect false after computation with 1 item on stack", false, result);
+  stack_delete(&stack8);
+
   return 0;
 }

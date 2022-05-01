@@ -65,7 +65,8 @@ bool stack_compute_step(Stack *s, CalculatorItem item) {
       CalculatorItem a;
       CalculatorItem b;
       if (!stack_pop(s, &a)){ return false; }
-      if (!stack_pop(s, &b)){ /*stack_push(s, a);*/ return false; }
+      if (!stack_pop(s, &b)){ stack_push(s, a);
+	                      return false; }
       CalculatorItem result;
       if (item.type == ADD){
         result.value = a.value + b.value;
@@ -77,7 +78,9 @@ bool stack_compute_step(Stack *s, CalculatorItem item) {
         result.value = a.value * b.value;
       }
       else {
-	if (!a.value){ /*stack_push(s,a); stack_push(s, b);*/ return false; }
+	if (!a.value){ stack_push(s, b);
+		       stack_push(s, a); 
+		       return false; }
         result.value = b.value / a.value;
       }
     result.type = NUMBER;
