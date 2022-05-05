@@ -10,5 +10,6 @@ LLint *push(LLint *list, int val) {
 }
 
 int reduce(LLint *nums, int (*f)(int, int), int initial) {
+  //recursively calls reduce to keep going to the next node in the linked list and calling the inputted function on it's value, stopping when there is no more node
   return (nums != NULL) ? (*f)(reduce(nums->next, f, initial), nums->val) : initial;
 }

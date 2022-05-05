@@ -21,7 +21,6 @@ char *alphabetize_word(char *word) {
   for (int i = 0; alphabetized[i] != '\0'; i++) {
     smallest = alphabetized[i];
     smallest_index = i;
-
     for (int j = i; alphabetized[j] != '\0'; j++) {
       if (alphabetized[j] < smallest) {
         smallest = alphabetized[j];
@@ -30,9 +29,5 @@ char *alphabetize_word(char *word) {
     }
     swap((alphabetized + i), (alphabetized + smallest_index));
   }
-  int* b;
-  int c = 4;
-  b = &c;
-  printf("%X",(int)b);
   return alphabetized;
 }
