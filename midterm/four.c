@@ -5,16 +5,19 @@
 #include <string.h>
 
 void swap(char *a, char *b) {
-  char tmp = *a;
+  char temp = *a;
   *a = *b;
-  *b = tmp;
+  *b = temp;
 }
 
 char *alphabetize_word(char *word) {
+  //create a pointer to a duplicate of inputted word
   char *alphabetized = strdup(word);
   int smallest;
   int smallest_index;
 
+  /*iterate through the string, moving the lower values, which is the order of lower case letters of alphabet in ascii, 
+  to the front of the string, and then doing it again until the end is reached.*/
   for (int i = 0; alphabetized[i] != '\0'; i++) {
     smallest = alphabetized[i];
     smallest_index = i;
@@ -27,6 +30,9 @@ char *alphabetize_word(char *word) {
     }
     swap((alphabetized + i), (alphabetized + smallest_index));
   }
-
+  int* b;
+  int c = 4;
+  b = &c;
+  printf("%X",(int)b);
   return alphabetized;
 }
