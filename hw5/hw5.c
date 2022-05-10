@@ -62,6 +62,12 @@ int main(int argc, char **argv) {
 
   // TODO(you): make sure that this program cleans up all memory that it
   // allocates! Use valgrind to make sure, using the commands in the README.md.
+  for (int i = 0; i < n_vertices; i++){
+    free(g->matrix[i]);
+  }
+  free(g->matrix);
+  free(g); 
 
+  fclose(infile);
   return 0;
 }

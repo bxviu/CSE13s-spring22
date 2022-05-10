@@ -25,9 +25,11 @@ typedef struct LLPath {
 
 LLint *add_to_set(LLint *set, int val);
 bool set_contains(LLint *set, int val);
+bool delete_set(LLint **s);
 
 LLPath *enqueue_path(LLPath *q, Path path); 
 bool dequeue_path(LLPath **q, Path *ret);
+LLPath* push_path(LLPath *s, Path path);
 
 Graph *graph_create(int vertices);
 void graph_add_edge(Graph *g, int i, int j) ;

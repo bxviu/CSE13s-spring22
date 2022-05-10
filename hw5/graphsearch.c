@@ -32,6 +32,7 @@ LLPath *enqueue_path(LLPath *q, Path path) {
   // YOUR CODE HERE
   LLPath* new = (LLPath*)calloc(1, sizeof(LLPath));
   new->val = path;
+  new->next = NULL;
   if (q == NULL){
     return new;
   }
@@ -64,8 +65,8 @@ LLPath* push_path(LLPath *s, Path path){
     return new;
   }
   new->next = s;
-  s = new;
-  return s;
+  //s = new;
+  return new;
 }
 
 bool pop_path(LLPath **s, Path *ret){
@@ -79,6 +80,29 @@ bool pop_path(LLPath **s, Path *ret){
   free(deleteThis);
   return true;
 }
+
+bool delete_set(LLint **s){
+  if (s == NULL) {
+    return false;
+  }
+  LLint* deleteThis = NULL;
+  while((*s)->next){
+    deleteThis = *s;
+    (*s) = (*s)->next;
+    free(deleteThis);
+  }
+  free(*s); 
+  return true; 
+}
+
+void print_list(LLint *node) {
+  if (!node) {
+    return;
+  }
+  printf("value: %d\n", node->val);
+  print_list(node->next);
+}
+
 // We wrote these in class.
 Graph *graph_create(int vertices) {
   Graph *g = (Graph *)malloc(sizeof(Graph));
@@ -134,12 +158,17 @@ Path graph_find_path_bfs(Graph *g, int i, int j) {
   LLPath* to_check = enqueue_path(NULL, start);
   Path deqP;
   while (dequeue_path(&to_check, &deqP)){
+    checked = add_to_set(checked, deqP.vertices_visited[deqP.steps-1]);
 	  //printf("looped ");
-	  print_path(deqP);
+	  //print_path(deqP);
+	  //print_list(checked);
     if (deqP.vertices_visited[deqP.steps-1] == j) {
-      return deqP;
+      result = deqP;
+      delete_set(&checked);
+      while (dequeue_path(&to_check,&deqP));
+      return result;
     }
-    add_to_set(checked, deqP.vertices_visited[deqP.steps-1]);
+    //print_list(checked);
     for (int k = 0; k < g->vertices; k++) {
 	//printf("checking %d to %d\n ", deqP.vertices_visited[deqP.steps-1], k);
 	//printf("k in for %d\n", k);
@@ -156,6 +185,7 @@ Path graph_find_path_bfs(Graph *g, int i, int j) {
       }
     }
   }
+  delete_set(&checked);
   return result;
 }
 
@@ -168,12 +198,16 @@ Path graph_find_path_dfs(Graph *g, int i, int j) {
   LLint* checked = NULL;
   LLPath* to_check = push_path(NULL, start);
   Path deqP;
-  while (pop_path(&to_check, &deqP)){
-	  print_path(deqP);
+  while (dequeue_path(&to_check, &deqP)){
+    checked = add_to_set(checked, deqP.vertices_visited[deqP.steps-1]); 
+	  //print_path(deqP);
+	  //print_list(checked);
     if (deqP.vertices_visited[deqP.steps-1] == j) {
-      return deqP;
+      result = deqP;
+      delete_set(&checked);
+      while (dequeue_path(&to_check,&deqP));
+      return result;
     }
-    add_to_set(checked, deqP.vertices_visited[deqP.steps-1]);
     for (int k = 0; k < g->vertices; k++) {
       if (graph_has_edge(g, deqP.vertices_visited[deqP.steps-1], k)) {
         if (!set_contains(checked, k)) {
@@ -185,5 +219,6 @@ Path graph_find_path_dfs(Graph *g, int i, int j) {
       }
     }
   }
+  delete_set(&checked);
   return result;
 }
