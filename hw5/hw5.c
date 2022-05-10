@@ -56,9 +56,9 @@ int main(int argc, char **argv) {
   path = graph_find_path_bfs(g, start, end);
   print_path(path);
 
-  /*printf("searching with DFS from %d to %d\n", start, end);
+  printf("searching with DFS from %d to %d\n", start, end);
   path = graph_find_path_dfs(g, start, end);
-  print_path(path);*/
+  print_path(path);
 
   // TODO(you): make sure that this program cleans up all memory that it
   // allocates! Use valgrind to make sure, using the commands in the README.md.
