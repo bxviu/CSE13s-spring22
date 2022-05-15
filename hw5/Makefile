@@ -6,16 +6,22 @@ CC = clang
 
 # You can comment this out and use the above CFLAGS instead if you need to,
 # during development.
-CFLAGS = -Wall -Wpedantic -Werror -Wextra -g
+CFLAGS = -Wall -Wpedantic -Werror -Wextra
 
 
-all: hw5
+all: hw5 graphsearch_test
 
 hw5: hw5.o graphsearch.o
 	$(CC) graphsearch.o hw5.o -o hw5
 
+graphsearch_test: graphsearch_test.o graphsearch.o
+	$(CC) graphsearch.o graphsearch_test.o -o graphsearch_test
+
 graphsearch.o: graphsearch.c graphsearch.h
 	$(CC) $(CFLAGS) -c graphsearch.c
+
+graphsearch_test.o: graphsearch_test.c graphsearch.h
+	$(CC) $(CFLAGS) -c graphsearch_test.c
 
 hw5.o: hw5.c graphsearch.h
 	$(CC) $(CFLAGS) -c hw5.c

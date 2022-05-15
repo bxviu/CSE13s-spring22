@@ -65,20 +65,7 @@ LLPath* push_path(LLPath *s, Path path){
     return new;
   }
   new->next = s;
-  //s = new;
   return new;
-}
-
-bool pop_path(LLPath **s, Path *ret){
-  if (*s == NULL) {
-    free(*s);
-    return false;
-  }
-  *ret = (*s)->val;
-  LLPath* deleteThis = *s;
-  (*s) = (*s)->next;
-  free(deleteThis);
-  return true;
 }
 
 bool delete_set(LLint **s){
@@ -95,12 +82,25 @@ bool delete_set(LLint **s){
   return true; 
 }
 
-void print_list(LLint *node) {
-  if (!node) {
-    return;
+bool delete_queue(LLPath* q){
+  if (q == NULL) {
+    return false;
   }
-  printf("value: %d\n", node->val);
-  print_list(node->next);
+  Path temp;
+  while (dequeue_path(&q,&temp));
+  return true;
+}
+
+bool delete_graph(Graph* g){
+  if (g == NULL) {
+    return false;
+  }
+  for (int i = 0; i < g->vertices; i++){
+    free(g->matrix[i]);
+  }
+  free(g->matrix);
+  free(g);
+  return true;
 }
 
 // We wrote these in class.
@@ -159,27 +159,15 @@ Path graph_find_path_bfs(Graph *g, int i, int j) {
   Path deqP;
   while (dequeue_path(&to_check, &deqP)){
     checked = add_to_set(checked, deqP.vertices_visited[deqP.steps-1]);
-	  //printf("looped ");
-	  //print_path(deqP);
-	  //print_list(checked);
     if (deqP.vertices_visited[deqP.steps-1] == j) {
       result = deqP;
-      delete_set(&checked);
-      while (dequeue_path(&to_check,&deqP));
-      return result;
+      delete_queue(to_check);
+      break;
     }
-    //print_list(checked);
     for (int k = 0; k < g->vertices; k++) {
-	//printf("checking %d to %d\n ", deqP.vertices_visited[deqP.steps-1], k);
-	//printf("k in for %d\n", k);
       if (graph_has_edge(g, deqP.vertices_visited[deqP.steps-1], k)) {
-	//printf("checking in if %d to %d; steps %d\n ", deqP.vertices_visited[deqP.steps], k, deqP.steps);
-	//printf("n in if %d\n", k);
         if (!set_contains(checked, k)) {
-
           Path splitPath = path_extend(deqP, k);
-          //printf("split %d ", k);
-	  //print_path(splitPath);
 	  to_check = enqueue_path(to_check, splitPath);
         }
       }
@@ -200,20 +188,15 @@ Path graph_find_path_dfs(Graph *g, int i, int j) {
   Path deqP;
   while (dequeue_path(&to_check, &deqP)){
     checked = add_to_set(checked, deqP.vertices_visited[deqP.steps-1]); 
-	  //print_path(deqP);
-	  //print_list(checked);
     if (deqP.vertices_visited[deqP.steps-1] == j) {
       result = deqP;
-      delete_set(&checked);
-      while (dequeue_path(&to_check,&deqP));
-      return result;
+      delete_queue(to_check);
+      break;
     }
     for (int k = 0; k < g->vertices; k++) {
       if (graph_has_edge(g, deqP.vertices_visited[deqP.steps-1], k)) {
         if (!set_contains(checked, k)) {
           Path splitPath = path_extend(deqP, k);
-	  //printf("split ");
-	  //print_path(splitPath);
 	  to_check = push_path(to_check, splitPath);
         }
       }

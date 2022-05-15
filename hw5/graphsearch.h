@@ -30,10 +30,12 @@ bool delete_set(LLint **s);
 LLPath *enqueue_path(LLPath *q, Path path); 
 bool dequeue_path(LLPath **q, Path *ret);
 LLPath* push_path(LLPath *s, Path path);
+bool delete_queue(LLPath* q);
 
 Graph *graph_create(int vertices);
-void graph_add_edge(Graph *g, int i, int j) ;
+void graph_add_edge(Graph *g, int i, int j);
 bool graph_has_edge(Graph *g, int i, int j);
+bool delete_graph(Graph* g);
 
 Path graph_find_path_bfs(Graph *g, int i, int j);
 Path graph_find_path_dfs(Graph *g, int i, int j);
