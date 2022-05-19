@@ -65,3 +65,7 @@ for (int i = 0; i < num_words; i++){
 }
 free(vocabulary);
 ```
+
+## Hard Mode
+
+For hard mode, I put everything in new files with "_hard_mode" after the normal name. For it to tell the user that they already tried using a letter, I added a new string called tried. Whenever the player tries a new word, any letter that is not in the secret word will be appended to the end of the tried string. Whenever the user inserts another word, a function called tried_letters will check if any of the letters in the input have already been tried and were wrong. If a letter is found, the user is not allowed to use that word. If a letter is not found, then the normal wordle gameplay happens, where they see the result string. I also made it so that the function prints out the letters that have already been tried, if the user's input is rejected.

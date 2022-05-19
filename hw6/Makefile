@@ -9,7 +9,7 @@ CC = clang
 CFLAGS = -Wall -Wpedantic -Werror -Wextra
 
 
-all: hw6
+all: hw6 hw6_hard_mode
 
 hw6: wordle_game.o hw6.o
 	$(CC) wordle_game.o hw6.o -o hw6
@@ -20,8 +20,17 @@ hw6.o: hw6.c wordle_game.h
 wordle_game.o: wordle_game.c wordle_game.h
 	$(CC) $(CFLAGS) -c wordle_game.c 
 
+hw6_hard_mode: wordle_game_hard_mode.o hw6_hard_mode.o
+	$(CC) wordle_game_hard_mode.o hw6_hard_mode.o -o hw6_hard_mode
+
+hw6_hard_mode.o: hw6_hard_mode.c wordle_game_hard_mode.h
+	$(CC) $(CFLAGS) -c hw6_hard_mode.c
+
+wordle_game_hard_mode.o: wordle_game_hard_mode.c wordle_game_hard_mode.h
+	$(CC) $(CFLAGS) -c wordle_game_hard_mode.c
+
 clean:
-	rm -f hw6 wordle_game.o hw6.o
+	rm -f hw6 wordle_game.o hw6.o hw6_hard_mode wordle_game_hard_mode.o hw6_hard_mode.o
 
 format:
 	clang-format -i -style=file *.[ch]
