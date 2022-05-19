@@ -7,12 +7,8 @@
 
 // Most of the code that you're going to have to implement goes in here.
 // Feel free to add more helper functions if necessary.
-bool letterIn(char* word, char c, int no){
-  for (int i = 0; word[i] != '\0'; i++){
-    if (c == word[i] && i != no) { return true; }
-  }
-  return false;
-}
+
+
 // Returns true if the guess is an exact match with the secret word, but
 // more importantly, fills in the result with the following:
 // - 'x' goes in a slot if the corresponding letter in the guess does not appear
@@ -25,23 +21,20 @@ bool letterIn(char* word, char c, int no){
 //   5. (ie, at least 6 bytes long)
 bool score_guess(char *secret, char *guess, char *result) {
   // TODO(you): finish this function
-  if (!strcmp(guess,secret)){
-    return true;
-  }
   for (int i = 0; guess[i] != '\0'; i++){
-    if (guess[i] == secret[i]){
+    result[i] = (guess[i] == secret[i]) ? 'g' : ((strchr(secret,guess[i]) != NULL) ? 'y' : 'x');
+    /*if (guess[i] == secret[i]){
       result[i] = 'g';
     }
-    //else if ((strchr(secret,guess[i])) != (&guess[i])){
-      //printf("strchr %d | guess %d | letter %c\n", (int)strchr(secret, guess[i]), (int)&guess[i], guess[i]);
-    else if (letterIn(secret,guess[i],i)){  
+    else if (strchr(secret,guess[i]) != NULL && strcmp(strchr(secret,guess[i]),guess+i)){
+      printf("strchr: %s | guess: %s | comp: %d\n", strchr(secret, guess[i]), guess+i, strcmp(strchr(secret,guess[i]),guess+i));
       result[i] = 'y';
     }
     else {
       result[i] = 'x';
-    }
+    }*/
   }
-  return false;
+  return (!strcmp(result, "ggggg")) ? true : false;
 }
 
 // Returns true if the specified guess is one of the strings in the vocabulary,
@@ -76,20 +69,19 @@ char **load_vocabulary(char *filename, size_t *num_words) {
   char **out = NULL;
   // TODO(you): finish this function
   FILE* infile;
-  char word[6];
+  char word[7];
   infile = fopen(filename, "r");
-  size_t size = 0;
+  *num_words = 0;
   out = (char**)calloc(1, sizeof(char*));
-  while(fgets(word,6,infile) != NULL){
-    if (strlen(word) == 5){
+  while(fgets(word,7,infile) != NULL){
+    //if (strlen(word) == 5){
       //printf("  stream: %s\n",word);
-      out[size] = strdup(word);
-      //printf("in array: %s size: %zu\n", out[size],size);
-      size++;
-      out = realloc(out, sizeof(char*)*(size+1));
-    }
+      if (*num_words%100 == 0){ out = realloc(out, sizeof(char*)*((*num_words+100))); }
+      out[(*num_words)++] = strndup(word, 5);
+      //printf("in array: %s size: %zu\n", out[*num_words],*num_words);
+      //(*num_words)++;
+    //}
   }
-  *num_words = size;
   fclose(infile);
   return out;
 }
