@@ -23,16 +23,6 @@ bool score_guess(char *secret, char *guess, char *result) {
   // TODO(you): finish this function
   for (int i = 0; guess[i] != '\0'; i++){
     result[i] = (guess[i] == secret[i]) ? 'g' : ((strchr(secret,guess[i]) != NULL) ? 'y' : 'x');
-    /*if (guess[i] == secret[i]){
-      result[i] = 'g';
-    }
-    else if (strchr(secret,guess[i]) != NULL && strcmp(strchr(secret,guess[i]),guess+i)){
-      printf("strchr: %s | guess: %s | comp: %d\n", strchr(secret, guess[i]), guess+i, strcmp(strchr(secret,guess[i]),guess+i));
-      result[i] = 'y';
-    }
-    else {
-      result[i] = 'x';
-    }*/
   }
   return (!strcmp(result, "ggggg")) ? true : false;
 }
@@ -69,18 +59,13 @@ char **load_vocabulary(char *filename, size_t *num_words) {
   char **out = NULL;
   // TODO(you): finish this function
   FILE* infile;
-  char word[7];
+  char word[10];
   infile = fopen(filename, "r");
   *num_words = 0;
   out = (char**)calloc(1, sizeof(char*));
-  while(fgets(word,7,infile) != NULL){
-    //if (strlen(word) == 5){
-      //printf("  stream: %s\n",word);
-      if (*num_words%100 == 0){ out = realloc(out, sizeof(char*)*((*num_words+100))); }
-      out[(*num_words)++] = strndup(word, 5);
-      //printf("in array: %s size: %zu\n", out[*num_words],*num_words);
-      //(*num_words)++;
-    //}
+  while(fgets(word,10,infile) != NULL){
+    if (*num_words%100 == 0){ out = realloc(out, sizeof(char*)*((*num_words+100))); }
+    out[(*num_words)++] = strndup(word, 5);
   }
   fclose(infile);
   return out;

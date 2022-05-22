@@ -22,10 +22,11 @@ int main(void) {
   // Randomly select one of the words from the file to be today's SECRET WORD.
   int word_index = rand() % num_words;
   char *secret = vocabulary[word_index];
-  //printf("word is: %s\n", secret);
+  
   // input buffer -- we'll use this to get a guess from the user.
   char guess[80];
   Guesses g = {{""},{""},{-1,-1,-1,-1,-1,'\0'}};
+  
   // buffer for scoring each guess.
   char result[6] = {0};
   bool success = false;
@@ -41,7 +42,7 @@ int main(void) {
     guess[5] = '\0';
 
     if (!valid_guess(guess, vocabulary, num_words, &g, secret)) {
-      printf("not a valid guess\n\n");
+      printf("Not a valid guess.\n\n");
       continue;
     } else {
       num_guesses++;
@@ -54,8 +55,7 @@ int main(void) {
   if (success) {
     printf("you win, in %d guesses!\n", num_guesses);
   }
-  //printf("word is: %s\n", secret);
   free_vocabulary(vocabulary, num_words);
-  //free(tried);
+  
   return 0;
 }
