@@ -3,9 +3,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-bool score_guess(char *secret, char *guess, char *result);
+typedef struct {
+  char tried[26];
+  char partial[8];
+  char correct[8];
+} Guesses;
 
-bool valid_guess(char *guess, char **vocabulary, size_t num_words, char* tried, char* secret);
+bool score_guess(char *secret, char *guess, char *result, Guesses* g);
+
+bool valid_guess(char *guess, char **vocabulary, size_t num_words, Guesses* g, char* secret);
 
 char **load_vocabulary(char *filename, size_t *num_words);
 
