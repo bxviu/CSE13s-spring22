@@ -34,15 +34,8 @@ int score_word(char *word, int *letter_scores) {
 
   // TODO(you): implement this function!
   int count = 0;
-  //printf("%s\n",word);
   for (int i = 0; word[i] != '\0'; i++){
-   /* printf("score %d\n",letter_scores[((int)word[i])-97]);
-    printf("int %d\n",((int)word[i])-97);
-    printf("int letter %d\n",(int)word[i]);
-    printf("letter %c\n",word[i]);
-  printf("%s and %s\n",strchr(word,word[i]),&word[i]);*/
     if (strchr(word,word[i]) == &word[i]) {
-	    //printf(
       count += letter_scores[((int)word[i])-97];
     }
   }
@@ -110,21 +103,11 @@ size_t filter_vocabulary_yellow(char letter, int position, char **vocabulary,
   // TODO(you): implement this function!
   int count = 0;
   for (size_t i = 0; i < num_words; i++){
-	  /*printf("%s\n",*(vocabulary+i));
-	  printf("%d\n",vocabulary[i] == NULL);
-	  printf("%d\n",position);*/
-    if (vocabulary[i] != NULL && (!strchr(vocabulary[i],letter))){// || *((*vocabulary)+position) == letter)){
+    if (vocabulary[i] != NULL && (!strchr(vocabulary[i],letter) || *((*(vocabulary+i))+position) == letter)){
       free(vocabulary[i]);
       vocabulary[i] = NULL;
       count++;
     }
-    else if (vocabulary[i] != NULL && *((*(vocabulary+i))+position) == letter){
-      //printf("found: %s\n",vocabulary[i]);
-      free(vocabulary[i]);
-      vocabulary[i] = NULL;
-      count++;
-    }
-  //printf("done\n");
   }
   return count;
 
@@ -141,7 +124,7 @@ size_t filter_vocabulary_green(char letter, int position, char **vocabulary,
   // TODO(you): implement this function!
   int count = 0;
   for (size_t i = 0; i < num_words; i++){
-    if (vocabulary[i] != NULL && *((*(vocabulary+i))+position) != letter){//**((&vocabulary[i])+position) != letter){
+    if (vocabulary[i] != NULL && *((*(vocabulary+i))+position) != letter){
       free(vocabulary[i]);
       vocabulary[i] = NULL;
       count++;
