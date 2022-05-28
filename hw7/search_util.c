@@ -67,7 +67,6 @@ char *get_guess(char **vocabulary, size_t num_words) {
       best_score = score;
     }
   }
-  printf("%d\n",best_score);
   return best_guess ? strdup(best_guess) : NULL;
 }
 
