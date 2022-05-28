@@ -6,7 +6,7 @@ CC = clang
 
 # You can comment this out and use the above CFLAGS instead if you need to,
 # during development.
-CFLAGS = -Wall -Wpedantic -Werror -Wextra -g
+CFLAGS = -Wall -Wpedantic -Werror -Wextra
 
 
 all: solver demo_functions
