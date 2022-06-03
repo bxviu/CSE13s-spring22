@@ -104,6 +104,15 @@ CustomerTable* table_create(size_t size){
 }
 ```
 
+### table_realloc
+
+This function will create a new table, with a different size of slots. This is so there are less collisions. Also created this since people in discord were talking about reallocating their hash tables and I didn't want to be left out and missing something. 
+```
+CustomerTable* table_realloc(CustomerTable* t){
+  
+}
+```
+
 ### display
 
 Display will print out the inputted customer's data nicely formatted.

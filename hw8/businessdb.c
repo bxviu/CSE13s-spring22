@@ -5,8 +5,6 @@
 
 #include "database_functions.h"
 
-//#define MAX_LENGTH = 128;
-
 int main(){
   char buffer[MAX_LENGTH];
   FILE* infile;
@@ -28,7 +26,7 @@ int main(){
   }
   fclose(infile);
   
-  printf("Customer Database Opened");
+  printf("Customer Database Opened.");
   while (true) {
     printf("\nEnter Command: ");
     fgets(buffer, MAX_LENGTH, stdin);
@@ -38,17 +36,17 @@ int main(){
     }
     else if (!strcmp(buffer,"lookup")){
       if (!lookup(t)){
-        printf("Customer Not Found\n");
+        printf("Customer Not Found.\n");
       }
     }
     else if (!strcmp(buffer,"delete")){
       char* del = delete(t);
       if (del) {
-        printf("Deleted Customer: %s\n", del);
+        printf("\nDeleted Customer: %s\n", del);
 	free(del);
       }
       else {
-        printf("Customer Not Found\n");
+        printf("Customer Not Found.\n");
       }
     }
     else if (!strcmp(buffer,"list")){

@@ -30,7 +30,7 @@ unsigned long hash(char *str) {
   return hash;
 }
 
-CustomerNode* add(CustomerTable* table){
+void add(CustomerTable* table){
   CustomerNode* c = (CustomerNode*)calloc(1, sizeof(CustomerNode));
   char buffer[MAX_LENGTH] = {0};
   printf("New Customer:\nEmail: ");
@@ -49,12 +49,11 @@ CustomerNode* add(CustomerTable* table){
   fgets(buffer, MAX_LENGTH, stdin);
   buffer[strlen(buffer)-1] = '\0';
   c->fav_food = strdup(buffer);
+  printf("\nCustomer Added: %s\n", c->email);
   table_add(table, c);
-  printf("Customer Added: %s\n", c->name);
-  return c;
 }
 
-CustomerNode* table_add(CustomerTable* table, CustomerNode* c){
+void table_add(CustomerTable* table, CustomerNode* c){
   unsigned long hashval = hash(c->email);
   size_t slot = hashval % table->num_slots;
 
@@ -66,13 +65,14 @@ CustomerNode* table_add(CustomerTable* table, CustomerNode* c){
       here->name = c->name;
       here->shoe_size = c->shoe_size;
       here->fav_food = c->fav_food;
-      return c;
+      free(c->email);
+      free(c);
+      return;
     }
     here = here->next;
   }
   c->next = table->slots[slot];
   table->slots[slot] = c;
-  return c;
 }
 
 bool lookup(CustomerTable* table){
@@ -130,14 +130,19 @@ char* delete(CustomerTable* table){
 
 void list(CustomerTable* table){
   printf("\nCustomer List:");
-  for (size_t i = 0; i < table->num_slots; i++) {
+  bool customers = false;
+  for (size_t i = 0; i < table->num_slots; i++) {	  
     if (table->slots[i] != NULL){
+      if (!customers) { customers = true; }
       CustomerNode* here = table->slots[i];
       while(here) {
         display(here);
         here = here->next;
       }
     }
+  }
+  if (!customers) {
+    printf("\nNo Customers in Database.\n");
   }
 }
 
@@ -154,6 +159,7 @@ void save(CustomerTable* table, char* file_name){
     }
   }
   fclose(infile);
+  printf("Database Saved!\n");
 }
 
 void quit(CustomerTable* table){

@@ -23,9 +23,9 @@ void display(CustomerNode* c);
 
 unsigned long hash(char *str);
 
-CustomerNode* add(CustomerTable* table);
+void add(CustomerTable* table);
 
-CustomerNode* table_add(CustomerTable* table, CustomerNode* c);
+void table_add(CustomerTable* table, CustomerNode* c);
 
 bool lookup(CustomerTable* table);
 
