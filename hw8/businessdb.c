@@ -6,13 +6,13 @@
 #include "database_functions.h"
 
 int main(){
-  char buffer[MAX_LENGTH];
+  char buffer[(MAX_LENGTH*8)];
   FILE* infile;
   char* file_name = "customers.tsv";
   infile = fopen(file_name, "r");
   char* token;
   CustomerTable* t = table_create(10);
-  while ((fgets(buffer, MAX_LENGTH, infile) != NULL)) {
+  while ((fgets(buffer, (MAX_LENGTH*8), infile) != NULL)) {
     CustomerNode* c = (CustomerNode*)calloc(1, sizeof(CustomerNode));
     token = strtok(buffer, "\t");
     c->email = strdup(token);
