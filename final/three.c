@@ -8,8 +8,5 @@ int count_values_at_least(int value, BinaryTree *tree) {
   if (tree == NULL) {
     return 0;
   }
-  /*else if (value <= tree->val){
-    return 1 + count_values_at_least(value, tree->left) + count_values_at_least(value, tree->right);
-  }*/
   return ((value <= tree->val) ? 1 : 0) + count_values_at_least(value, tree->left) + count_values_at_least(value, tree->right);
 }

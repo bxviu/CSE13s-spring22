@@ -10,7 +10,7 @@ WordCountTable *merge_word_count_tables(WordCountTable *table_a,
   // Your code here! You can change whatever you want in this function.
   // return an empty one just so we don't crash.
   WordCountTable *out = (table_a->num_buckets < table_b->num_buckets) ? build_word_count_table(table_b->num_buckets) : build_word_count_table(table_a->num_buckets);
-  WordCountTable tables[2] = {{table_a->num_buckets,table_a->buckets}, {table_b->num_buckets,table_b->buckets}};
+  WordCountTable tables[2] = {*table_a, *table_b};
   for (int j = 0; j < 2; j++) {
     for (size_t i = 0; i < tables[j].num_buckets; i++) {
       if (tables[j].buckets[i] != NULL){
@@ -22,24 +22,6 @@ WordCountTable *merge_word_count_tables(WordCountTable *table_a,
       }
     }
   }
-  /*for (size_t i = 0; i < table_a->num_buckets; i++) {	  
-    if (table_a->slots[i] != NULL){
-      WordCountNode* here = table_a->buckets[i];
-      while(here) {
-        set_word_count(here->word, get_word_count(here->word, table_a), out);
-        here = here->next;
-      }
-    }
-  }
-  for (size_t i = 0; i < table_b->num_buckets; i++) {
-    if (table_b->slots[i] != NULL){
-      WordCountNode* here = table_b->buckets[i];
-      while(here) {
-        set_word_count(here->word, get_word_count(here->word, table_b), out);
-        here = here->next;
-      }
-    }
-  }*/
   return out;
 }
 

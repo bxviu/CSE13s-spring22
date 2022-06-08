@@ -1,7 +1,6 @@
 #include "final.h"
 
 #include <stdio.h>
-//#include <string.h>
 
 char **alphabet_sequences(int maxsize) {
   // Your code here!
@@ -9,19 +8,11 @@ char **alphabet_sequences(int maxsize) {
   // returning. and you'll also need to allocate each string in that array.
   char** alphabet_array = (char**)calloc(maxsize, sizeof(char*));
   for (int i = 0; i < maxsize; i++){
+    alphabet_array[i] = (char*)calloc(i+2, sizeof(char));
     for (int j = 0; j <= i; j++){
-      alphabet_array[i] = (char*)calloc(j+2, sizeof(char));
-      for (int k = 0; k <= j; k++){
-	//if (maxsize/) {
-          alphabet_array[i][k] = k + 'a' - (26*((int)k/26));
-	/*}
-	else {
-          alphabet_array[i][k] = k + 'a';
-	}*/
-      }
-      alphabet_array[i][j+1] = '\0';
+      alphabet_array[i][j] = j + 'a' - (26*((int)j/26));
     }
-    //printf("%s\n", alphabet_array[i]);
+    alphabet_array[i][i+1] = '\0';
   }
   return alphabet_array;
 }
